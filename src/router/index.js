@@ -4,6 +4,8 @@ import AuthContainer from "../components/Login/AuthContainer.vue";
 import Home from "../components/Home/Home.vue";
 import Popular from "../components/popular/Popular.vue";
 import Search from "../components/Search/Search.vue";
+import Wishlist from "../components/Wishlist/Wishlist.vue";
+
 const routes = [
     {
         path: "/signin",
@@ -27,8 +29,13 @@ const routes = [
         name: "search",
         component: Search,
         meta: { requiresAuth: true }
+    },
+    {
+        path: "/wishlist",
+        name: "wishlist",
+        component: Wishlist,
+        meta: { requiresAuth: true },
     }
-
 ];
 
 const router = createRouter({

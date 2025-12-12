@@ -32,42 +32,50 @@ const props = defineProps({
 });
 
 const liked = ref(false);
-const STORAGE_KEY = "likedMovies";
+const ID_KEY = "likedMovies";
+const DATA_KEY = "likedMoviesData";
 
-/* -------------------------
-   포스터 URL
-------------------------- */
+/* 찜 상태 로드 */
+onMounted(() => {
+  const ids = JSON.parse(localStorage.getItem(ID_KEY) || "[]");
+  liked.value = ids.includes(props.movie.id);
+});
+
+/* 찜 토글 */
+function toggleLike() {
+  const ids = JSON.parse(localStorage.getItem(ID_KEY) || "[]");
+  const data = JSON.parse(localStorage.getItem(DATA_KEY) || "[]");
+
+  if (liked.value) {
+    localStorage.setItem(
+        ID_KEY,
+        JSON.stringify(ids.filter(id => id !== props.movie.id))
+    );
+    localStorage.setItem(
+        DATA_KEY,
+        JSON.stringify(data.filter(m => m.id !== props.movie.id))
+    );
+    liked.value = false;
+  } else {
+    localStorage.setItem(
+        ID_KEY,
+        JSON.stringify([...ids, props.movie.id])
+    );
+    localStorage.setItem(
+        DATA_KEY,
+        JSON.stringify([...data, props.movie])
+    );
+    liked.value = true;
+  }
+}
 const posterUrl = computed(() => {
   return props.movie.poster_path
       ? `https://image.tmdb.org/t/p/w300${props.movie.poster_path}`
       : "/no-image.png";
 });
 
-/* -------------------------
-   찜 상태 로드
-------------------------- */
-onMounted(() => {
-  const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  liked.value = list.includes(props.movie.id);
-});
-
-/* -------------------------
-   찜 토글
-------------------------- */
-function toggleLike() {
-  const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-
-  if (liked.value) {
-    const next = list.filter(id => id !== props.movie.id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    liked.value = false;
-  } else {
-    list.push(props.movie.id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-    liked.value = true;
-  }
-}
 </script>
+
 
 <style scoped>
 .search-item {
