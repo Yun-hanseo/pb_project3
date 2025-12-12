@@ -1,6 +1,6 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from "vue-router";
-import AuthContainer from "../components/Login/AuthContainer.vue";
+import AuthContainer from "../components/AuthContainer.vue";
 import { useAuth } from "../composables/useAuth.js";
 
 // 임시 홈 컴포넌트 (나중에 HomePage.vue 만들면 교체)
