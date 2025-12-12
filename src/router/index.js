@@ -2,6 +2,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import AuthContainer from "../components/Login/AuthContainer.vue";
 import Home from "../components/Home/Home.vue";
+import Popular from "../components/popular/Popular.vue";
 
 const routes = [
     {
@@ -13,6 +14,12 @@ const routes = [
         path: "/",
         name: "home",
         component: Home,
+        meta: { requiresAuth: true },
+    },
+    {
+        path: "/popular",
+        name: "popular",
+        component: Popular,
         meta: { requiresAuth: true },
     },
 ];
