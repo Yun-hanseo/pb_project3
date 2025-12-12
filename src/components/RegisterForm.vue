@@ -11,23 +11,23 @@
       />
     </div>
 
-    <!-- 비밀번호 -->
+    <!-- TMDB API Key -->
     <div style="margin-top: 10px;">
-      <label>비밀번호</label>
+      <label>TMDB API Key</label>
       <input
           type="password"
           v-model="password"
-          placeholder="비밀번호 입력"
+          placeholder="TMDB API Key 입력"
       />
     </div>
 
-    <!-- 비밀번호 확인 -->
+    <!-- TMDB API Key 확인 -->
     <div style="margin-top: 10px;">
-      <label>비밀번호 확인</label>
+      <label>TMDB API Key 확인</label>
       <input
           type="password"
           v-model="passwordCheck"
-          placeholder="비밀번호 다시 입력"
+          placeholder="TMDB API Key 다시 입력"
       />
     </div>
 
@@ -61,10 +61,11 @@
 import { ref } from "vue";
 import { useAuth } from "../composables/useAuth.js";
 
+
 // 입력값
 const email = ref("");
-const password = ref("");
-const passwordCheck = ref("");
+const password = ref("");         // TMDB KEY
+const passwordCheck = ref("");    // TMDB KEY 확인
 const agree = ref(false);
 
 // Auth 로직
@@ -105,3 +106,4 @@ function switchToLogin() {
   cursor: pointer;
 }
 </style>
+

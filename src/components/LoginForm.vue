@@ -11,13 +11,13 @@
       />
     </div>
 
-    <!-- 비밀번호 입력 -->
+    <!-- TMDB API Key 입력 -->
     <div style="margin-top: 10px;">
-      <label>비밀번호</label>
+      <label>TMDB API Key</label>
       <input
           type="password"
           v-model="password"
-          placeholder="비밀번호 입력"
+          placeholder="TMDB API Key 입력"
       />
     </div>
 
@@ -53,7 +53,7 @@ import { useAuth } from "../composables/useAuth.js";
 
 // 입력값
 const email = ref("");
-const password = ref("");
+const password = ref("");    // ← TMDB API Key 저장
 const remember = ref(false);
 
 // Auth 로직
@@ -83,7 +83,7 @@ onMounted(() => {
 function onLoginClick() {
   const result = login({
     email: email.value,
-    password: password.value,
+    password: password.value,   // TMDB API KEY 전달
     remember: remember.value,
   });
 
