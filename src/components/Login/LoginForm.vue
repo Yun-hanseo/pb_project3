@@ -49,7 +49,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useAuth } from "../composables/useAuth.js";
+import { useAuth } from "../../composables/useAuth.js";
 
 // 입력값
 const email = ref("");
