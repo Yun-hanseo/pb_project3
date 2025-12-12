@@ -36,12 +36,12 @@ const props = defineProps({
 const movies = ref([]);
 const loading = ref(true);
 
-const { fetchMovies } = useTMDB();
+const { getMovies } = useTMDB();
 
 // API 호출
 async function loadMovies() {
   loading.value = true;
-  movies.value = await fetchMovies(props.apiType);
+  movies.value = await getMovies(props.apiType);
   loading.value = false;
 }
 
