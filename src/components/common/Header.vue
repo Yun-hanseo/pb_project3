@@ -2,19 +2,18 @@
 <template>
   <header class="header">
 
-    <!-- 로고 / 홈 이동 -->
-    <h1 class="logo" @click="goHome">PB MOVIE</h1>
+    <!-- 로고 -->
+    <h1 class="logo" @click="go('/')">PB MOVIE</h1>
 
-    <!-- 네비게이션 메뉴 -->
+    <!-- 네비게이션 -->
     <nav class="nav">
-      <span @click="go('/')" :class="{ active: isActive('/') }">Home</span>
-      <span @click="go('/popular')" :class="{ active: isActive('/popular') }">Popular</span>
-      <span @click="go('/now-playing')" :class="{ active: isActive('/now-playing') }">Now Playing</span>
-      <span @click="go('/top-rated')" :class="{ active: isActive('/top-rated') }">Top Rated</span>
-      <span @click="go('/upcoming')" :class="{ active: isActive('/upcoming') }">Upcoming</span>
+      <span @click="go('/')" :class="{ active: isActive('/') }">메인</span>
+      <span @click="go('/popular')" :class="{ active: isActive('/popular') }">인기</span>
+      <span @click="go('/search')" :class="{ active: isActive('/search') }">검색</span>
+      <span @click="go('/wishlist')" :class="{ active: isActive('/wishlist') }">찜한 목록</span>
     </nav>
 
-    <!-- 오른쪽 영역 -->
+    <!-- 우측 영역 -->
     <div class="right-area">
       <span class="user-email">{{ userEmail }}</span>
       <button @click="logoutUser" class="logout-btn">로그아웃</button>
@@ -32,26 +31,17 @@ const router = useRouter();
 const route = useRoute();
 const { logout } = useAuth();
 
-// 현재 로그인 사용자
 const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null");
-
 const userEmail = computed(() => currentUser?.email || "Guest");
 
-function goHome() {
-  router.push("/");
-}
-
-// 메뉴 이동 함수
 function go(path) {
   router.push(path);
 }
 
-// 현재 활성화된 메뉴 체크
 function isActive(path) {
   return route.path === path;
 }
 
-// 로그아웃
 function logoutUser() {
   logout();
   router.push("/signin");
@@ -78,15 +68,15 @@ function logoutUser() {
   cursor: pointer;
 }
 
-/* 메뉴 영역 */
+/* 네비게이션 */
 .nav {
   display: flex;
-  gap: 18px;
+  gap: 20px;
 }
 
 .nav span {
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 0.7;
   transition: 0.2s;
 }
 
@@ -100,11 +90,16 @@ function logoutUser() {
   border-bottom: 2px solid white;
 }
 
-/* 오른쪽 영역 */
+/* 우측 */
 .right-area {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
+}
+
+.user-email {
+  font-size: 13px;
+  opacity: 0.8;
 }
 
 .logout-btn {
@@ -112,3 +107,4 @@ function logoutUser() {
   cursor: pointer;
 }
 </style>
+

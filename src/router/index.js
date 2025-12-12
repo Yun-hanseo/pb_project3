@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import AuthContainer from "../components/Login/AuthContainer.vue";
 import Home from "../components/Home/Home.vue";
 import Popular from "../components/popular/Popular.vue";
-
+import Search from "../components/Search/Search.vue";
 const routes = [
     {
         path: "/signin",
@@ -22,6 +22,13 @@ const routes = [
         component: Popular,
         meta: { requiresAuth: true },
     },
+    {
+        path: "/search",
+        name: "search",
+        component: Search,
+        meta: { requiresAuth: true }
+    }
+
 ];
 
 const router = createRouter({
