@@ -64,9 +64,32 @@ onMounted(() => {
 
 /* 카드들을 가로 배치 */
 .movie-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+
+  overflow-x: auto;     /* 🔥 가로 스크롤 */
+  overflow-y: visible;
+}
+
+/* 🔴 가로 스크롤바 전체 높이 */
+.movie-list::-webkit-scrollbar {
+  height: 8px;
+}
+
+/* ❌ 스크롤바 배경 제거 */
+.movie-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.movie-list::-webkit-scrollbar-thumb {
+  background-color: #e50914; /* 넷플릭스 레드 */
+  border-radius: 10px;
+}
+
+/* hover 시 살짝 밝게 */
+.movie-list::-webkit-scrollbar-thumb:hover {
+  background-color: #ff2a2a;
 }
 
 /* 로딩 화면 */

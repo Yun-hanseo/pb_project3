@@ -41,34 +41,28 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import WishlistItem from "./WishlistItem.vue";
-
-const STORAGE_KEY = "likedMoviesData"; // 🔥 영화 객체 저장 기준
-
-const movies = ref([]);
-const page = ref(1);
-const perPage = 20;
+import { useWishlist } from "@/composables/useWishlist";
 
 /* ======================
-   LocalStorage 로드
-   (API 호출 ❌)
+   🔥 공통 Wishlist 상태
 ====================== */
-onMounted(() => {
-  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  movies.value = saved;
-});
+const { wishlistMovies, removeFromWishlist } = useWishlist();
 
 /* ======================
    Pagination
 ====================== */
+const page = ref(1);
+const perPage = 20;
+
 const totalPages = computed(() =>
-    Math.max(1, Math.ceil(movies.value.length / perPage))
+    Math.max(1, Math.ceil(wishlistMovies.value.length / perPage))
 );
 
 const pagedMovies = computed(() => {
   const start = (page.value - 1) * perPage;
-  return movies.value.slice(start, start + perPage);
+  return wishlistMovies.value.slice(start, start + perPage);
 });
 
 function nextPage() {
@@ -80,11 +74,10 @@ function prevPage() {
 }
 
 /* ======================
-   찜 해제
+   ❌ 찜 해제 (핵심)
 ====================== */
 function removeMovie(id) {
-  movies.value = movies.value.filter(m => m.id !== id);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(movies.value));
+  removeFromWishlist(id);
 }
 
 /* 페이지 변경 시 스크롤 상단 */
@@ -105,7 +98,6 @@ watch(page, () => {
 .section-title {
   margin: 20px 0 14px;
 }
-
 
 /* 테이블 */
 .table-grid {

@@ -26,6 +26,7 @@ html, body, #app {
   padding: 0;
   width: 100%;
   height: 100%;
-  background: black;   /* 🔥 기본 배경을 검정으로 */
+  background: white;
+  overflow-x: hidden;/* 🔥 기본 배경을 검정으로 */
 }
 </style>

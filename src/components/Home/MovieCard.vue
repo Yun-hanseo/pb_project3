@@ -1,165 +1,235 @@
-
 <template>
-  <div
-      class="movie-card"
-      :class="{ bookmarked: isBookmarked }"
-      @click="toggleBookmark"
-  >
+  <div class="poster-card">
 
-    <!-- 영화 이미지 -->
-    <img
-        class="poster"
-        :src="imgUrl"
-        :alt="movie.title"
-    />
+    <!-- 🎬 포스터 -->
+    <div class="poster-wrapper">
+      <img :src="imgUrl" class="poster-img" />
 
-    <!-- 영화 정보 -->
-    <div class="info">
-      <h3 class="title">{{ movie.title }}</h3>
-      <p class="overview">{{ shortOverview }}</p>
-
-      <div class="meta">
-        <span v-if="movie.vote_average">⭐ {{ movie.vote_average }}</span>
-        <span v-if="movie.release_date">{{ movie.release_date }}</span>
-      </div>
+      <!-- ❤️ 좋아요 버튼 -->
+      <button
+          class="wish-btn"
+          :class="{ active: isBookmarked }"
+          @click.stop="toggleBookmark"
+      >
+        <span class="heart">{{ isBookmarked ? "♥" : "♡" }}</span>
+      </button>
     </div>
 
-    <!-- 추천 표시 -->
-    <div class="bookmark-icon">
-      <i v-if="isBookmarked" class="fas fa-heart"></i>
-      <i v-else class="far fa-heart"></i>
+    <!-- 🎞 제목 -->
+    <p class="poster-title">{{ movie.title }}</p>
+
+    <!-- ⭐ 평점 + 📅 개봉일 -->
+    <div class="poster-info">
+      <span class="rating">⭐ {{ movie.vote_average.toFixed(1) }}</span>
+      <span class="release">{{ movie.release_date }}</span>
     </div>
+
+    <!-- 🎬 줄거리 보기 -->
+    <button class="summary-btn" @click="openModal">
+      줄거리 보기
+    </button>
+
+    <!-- 🎬 카드 내부 미니 모달 -->
+    <div v-if="showModal" class="inner-popup">
+      <button class="close-btn" @click="closeModal">✕</button>
+
+      <h3 class="popup-title">{{ movie.title }}</h3>
+      <p class="popup-overview">{{ movie.overview }}</p>
+    </div>
+
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
+import { useWishlist } from "@/composables/useWishlist";
 
+/* props */
 const props = defineProps({
-  movie: Object,
-  genres: Array
+  movie: Object
 });
 
+/* 이미지 */
+const imgUrl = computed(() =>
+    props.movie.poster_path
+        ? `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`
+        : "https://via.placeholder.com/300x450"
+);
+
 /* =========================
-   찜 상태 (Wishlist 연동)
+   ❤️ 찜 기능 (공유 상태 기준)
 ========================= */
-const isBookmarked = ref(false);
+const { toggleWishlist, isInWishlist } = useWishlist();
 
-const ID_KEY = "likedMovies";
-const DATA_KEY = "likedMoviesData";
+const isBookmarked = computed(() =>
+    isInWishlist(props.movie.id)
+);
 
-/* 찜 상태 로드 */
-function loadBookmarkStatus() {
-  const ids = JSON.parse(localStorage.getItem(ID_KEY) || "[]");
-  isBookmarked.value = ids.includes(props.movie.id);
-}
-
-/* 찜 토글 */
 function toggleBookmark() {
-  const ids = JSON.parse(localStorage.getItem(ID_KEY) || "[]");
-  const data = JSON.parse(localStorage.getItem(DATA_KEY) || "[]");
-
-  if (isBookmarked.value) {
-    localStorage.setItem(
-        ID_KEY,
-        JSON.stringify(ids.filter(id => id !== props.movie.id))
-    );
-    localStorage.setItem(
-        DATA_KEY,
-        JSON.stringify(data.filter(m => m.id !== props.movie.id))
-    );
-    isBookmarked.value = false;
-  } else {
-    localStorage.setItem(
-        ID_KEY,
-        JSON.stringify([...ids, props.movie.id])
-    );
-    localStorage.setItem(
-        DATA_KEY,
-        JSON.stringify([...data, props.movie])
-    );
-    isBookmarked.value = true;
-  }
+  toggleWishlist(props.movie);
 }
 
 /* =========================
-   기존 코드 (그대로 유지)
+   📖 카드 내부 모달
 ========================= */
-const imgUrl = computed(() => {
-  return props.movie.poster_path
-      ? `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`
-      : "/no-image.png";
-});
-
-const shortOverview = computed(() => {
-  if (!props.movie.overview) return "설명 없음";
-  return props.movie.overview.length > 70
-      ? props.movie.overview.slice(0, 70) + "..."
-      : props.movie.overview;
-});
-
-onMounted(loadBookmarkStatus);
+const showModal = ref(false);
+const openModal = () => (showModal.value = true);
+const closeModal = () => (showModal.value = false);
 </script>
 
-
 <style scoped>
-.movie-card {
+/* 카드 */
+.poster-card {
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  border-radius: 14px;
   position: relative;
-  width: 160px;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
 }
 
-/* Hover 시 확대 효과 */
-.movie-card:hover {
-  transform: scale(1.07);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
-}
-
-.poster {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.info {
-  margin-top: 8px;
-}
-
-.title {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-
-.overview {
-  font-size: 12px;
-  opacity: 0.7;
-  height: 40px;
+/* 포스터 */
+.poster-wrapper {
+  position: relative;
+  border-radius: 12px;
   overflow: hidden;
 }
 
-.meta {
-  margin-top: 6px;
+.poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+.poster-img:hover {
+  transform: scale(1.05);
+}
+
+/* 제목 */
+.poster-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  margin-top: 4px;
+}
+
+/* 정보 */
+.poster-info {
   display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  opacity: 0.85;
+  gap: 10px;
+  font-size: 13px;
 }
 
-/* 추천(즐겨찾기) 아이콘 */
-.bookmark-icon {
+.rating {
+  color: #ffb300;
+}
+
+.release {
+  color: #aaa;
+}
+
+/* ❤️ 좋아요 버튼 */
+.wish-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
+
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.2s ease;
+}
+
+.wish-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+  transform: scale(1.1);
+}
+
+/* ❤️ 기본 하트 */
+.heart {
+  font-size: 18px;
+  color: #bbb;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* ❤️ 눌린 상태 */
+.wish-btn.active .heart {
+  color: #e50914;
+  transform: scale(1.15);
+}
+
+/* 🎬 줄거리 버튼 */
+.summary-btn {
+  margin-top: 4px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  background: white;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =========================
+   📖 카드 내부 팝업
+========================= */
+.inner-popup {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+  padding: 18px;
+  color: white;
+  z-index: 20;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeIn 0.2s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
+  border: none;
   font-size: 20px;
+  color: white;
+  cursor: pointer;
 }
 
-.bookmarked .bookmark-icon i {
-  color: red;
+.popup-title {
+  margin-top: 20px;
+  font-size: 17px;
+  font-weight: 700;
 }
 
-.bookmarked {
-  border: 1px solid red;
-  border-radius: 10px;
+.popup-overview {
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-y: auto;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 </style>
+
