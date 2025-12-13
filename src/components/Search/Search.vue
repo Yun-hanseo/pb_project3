@@ -110,7 +110,7 @@ function resetFilter() {
   filters.value = {
     genre: "",
     rating: 0,
-    sort: "popularity.desc",
+    sort: "popular",
   };
 }
 </script>

@@ -34,13 +34,21 @@
       <option :value="9">9점 이상</option>
     </select>
 
+    <button class="reset-btn" @click="resetFilter">
+      초기화
+    </button>
+
   </div>
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 
-const emit = defineEmits(["change"]);
+const props = defineProps({
+  filters: Object
+});
+
+const emit = defineEmits(["change", "reset"]);
 
 const local = reactive({
   sort: "popular",
@@ -48,10 +56,26 @@ const local = reactive({
   rating: 0,
 });
 
+
 function emitChange() {
   emit("change", { ...local });
 }
+
+function resetFilter() {
+  emit("reset");
+}
+
+watch(
+    () => props.filters,
+    (newFilters) => {
+      local.sort = newFilters.sort;
+      local.genre = newFilters.genre;
+      local.rating = newFilters.rating;
+    },
+    { deep: true }
+);
 </script>
+
 
 <style scoped>
 .filter-box {
