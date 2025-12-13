@@ -54,40 +54,82 @@ function handleRegisterFail(error) { alert(error); }
 </script>
 
 <style scoped>
+/* 배경 (넷플릭스 느낌 유지) */
 .flip-wrapper {
-  perspective: 1200px; /* 카드가 더 자연스럽게 회전하게 함 */
-  width: 350px;
-  margin: 80px auto;
+  position: fixed;          /* 🔥 핵심 */
+  inset: 0;                 /* top/right/bottom/left = 0 */
+  display: flex;
+  align-items: center;      /* 수직 중앙 */
+  justify-content: center;  /* 수평 중앙 */
+
+  background:
+      linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+      url("/netflix.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
+/* 카드 회전 컨테이너 */
 .flip-card {
-  width: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease;
+  width: 500px;                 /* 🔥 카드 크게 */
   position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.0s ease;
+
+  min-height: 700px;
+  transform: translateX(-30px);
 }
 
-/* 뒤집힌 상태 */
 .flip-card.flipped {
   transform: rotateY(180deg);
 }
 
-/* 앞/뒤 면 공통 */
+/* 앞/뒤 카드 공통 */
 .flip-face {
   position: absolute;
   width: 100%;
-  backface-visibility: hidden; /* 뒷면 숨기기 */
-  padding: 20px;
-  border: 1px solid #555;
-  border-radius: 10px;
-  box-sizing: border-box;
-  background: #fff;
-  text-align: center;
+  backface-visibility: hidden;
+
+  padding: 40px 26px;           /* 🔥 넉넉한 여백 */
+  border-radius: 16px;
+
+  background: rgba(0,0,0,0.6);  /* 🔥 반투명 */
+  backdrop-filter: blur(8px);
+
+  box-shadow:
+      0 20px 50px rgba(0,0,0,0.6),
+      0 0 0 1px rgba(255,255,255,0.06);
+
+  color: white;
 }
 
-/* 뒷면 스타일 */
-.back {
-  transform: rotateY(180deg);
+/* 제목 */
+.flip-face h2 {
+  margin-bottom: 32px;
+  font-size: 34px;
+  font-weight: 700;
 }
+
+/* 뒷면 */
+.back {
+  transform: rotateY(180deg) translateX(20px);
+}
+
+
+/* 반응형 */
+@media (max-width: 500px) {
+  .flip-card {
+    width: 340px;
+  }
+  .flip-face {
+    padding: 40px 28px;
+  }
+  .flip-face h2 {
+    font-size: 26px;
+  }
+}
+
 </style>
 

@@ -101,9 +101,59 @@ function switchToLogin() {
 </script>
 
 <style scoped>
-.switch {
-  color: skyblue;
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.register-form label {
+  font-size: 13px;
+  color: #b3b3b3;
+}
+
+.register-form input[type="text"],
+.register-form input[type="password"] {
+  width: 90%;
+  padding: 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.15);
+
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+.register-form input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.register-form input:focus {
+  outline: none;
+  border-color: #e50914;
+  box-shadow: 0 0 0 2px rgba(229,9,20,0.25);
+}
+
+.register-form button {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 6px;
+  border: none;
+
+  background: #e50914;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+
   cursor: pointer;
 }
-</style>
 
+.register-form button:hover {
+  background: #f6121d;
+}
+
+.switch {
+  color: #4dabff;
+  cursor: pointer;
+}
+
+</style>

@@ -101,9 +101,60 @@ function switchToRegister() {
 </script>
 
 <style scoped>
-.switch {
-  color: skyblue;
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-form label {
+  font-size: 13px;
+  color: #b3b3b3;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 90%;
+  padding: 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.15);
+
+  background: rgba(255,255,255,0.08); /* 🔥 쨍함 제거 */
+  color: white;
+}
+
+.login-form input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #e50914;
+  box-shadow: 0 0 0 2px rgba(229,9,20,0.25);
+}
+
+.login-form button {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 6px;
+  border: none;
+
+  background: #e50914;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+
   cursor: pointer;
 }
+
+.login-form button:hover {
+  background: #f6121d;
+}
+
+.switch {
+  color: #4dabff;
+  cursor: pointer;
+}
+
 </style>
 
