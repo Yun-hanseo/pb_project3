@@ -1,9 +1,8 @@
-<!-- src/components/common/Header.vue -->
 <template>
   <header class="header">
 
     <!-- 로고 -->
-    <h1 class="logo" @click="go('/')">PB MOVIE</h1>
+    <h1 class="logo" @click="go('/')">HOME</h1>
 
     <!-- 네비게이션 -->
     <nav class="nav">
@@ -15,7 +14,7 @@
 
     <!-- 우측 영역 -->
     <div class="right-area">
-      <span class="user-email">{{ userEmail }}</span>
+      <span class="user-email">현재 접속자: {{ userEmail }}</span>
       <button @click="logoutUser" class="logout-btn">로그아웃</button>
     </div>
 
@@ -44,6 +43,7 @@ function isActive(path) {
 
 function logoutUser() {
   logout();
+  alert("로그아웃되었습니다!");
   router.push("/signin");
 }
 </script>
@@ -72,6 +72,7 @@ function logoutUser() {
 .nav {
   display: flex;
   gap: 20px;
+  margin-right:900px;
 }
 
 .nav span {
@@ -100,11 +101,13 @@ function logoutUser() {
 .user-email {
   font-size: 13px;
   opacity: 0.8;
+  margin-right: 10px;
 }
 
 .logout-btn {
   padding: 6px 10px;
   cursor: pointer;
+  margin-right: 50px;
 }
 </style>
 
