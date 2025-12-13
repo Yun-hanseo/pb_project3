@@ -7,17 +7,24 @@
       <option value="popular">인기순</option>
       <option value="rating">평점순</option>
       <option value="latest">개봉 최신순</option>
+      <option value="hidden">숨은 명작</option>
+      <option value="latest_popular">최신 인기작</option>
     </select>
 
     <!-- 장르 -->
     <select v-model="local.genre" @change="emitChange">
       <option value="">전체 장르</option>
       <option value="28">액션</option>
+      <option value="12">모험</option>
       <option value="35">코미디</option>
       <option value="18">드라마</option>
+      <option value="27">공포</option>
+      <option value="53">스릴러</option>
+      <option value="10749">로맨스</option>
       <option value="878">SF</option>
       <option value="16">애니메이션</option>
     </select>
+
 
     <!-- 평점 -->
     <select v-model.number="local.rating" @change="emitChange">

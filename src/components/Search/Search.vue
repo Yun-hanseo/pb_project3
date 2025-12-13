@@ -34,7 +34,7 @@ onMounted(async () => {
   const collected = [];
   const idSet = new Set();
 
-  for (let page = 1; page <= 20; page++) {
+  for (let page = 1; page <= 50; page++) {
     const res = await getMovies("popular", page);
 
     res.forEach(movie => {
@@ -80,6 +80,24 @@ const filteredMovies = computed(() => {
             new Date(b.release_date) - new Date(a.release_date)
     );
   }
+
+  if (filters.value.sort === "hidden") {
+    list.sort(
+        (a, b) =>
+            b.vote_average / (b.popularity + 1) -
+            a.vote_average / (a.popularity + 1)
+    );
+  }
+
+  if (filters.value.sort === "latest_popular") {
+    list.sort((a, b) => {
+      const dateScore =
+          new Date(b.release_date) - new Date(a.release_date);
+      const popularityScore = b.popularity - a.popularity;
+      return dateScore + popularityScore;
+    });
+  }
+
 
   return list;
 });
