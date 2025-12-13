@@ -69,6 +69,7 @@ export function useAuth() {
         if (user.password !== password)
             return { success: false, message: "TMDB API Key가 틀렸습니다." };
 
+
         // 로그인 성공
         isLoggedIn.value = true;
         localStorage.setItem("isLoggedIn", "true");
@@ -76,6 +77,9 @@ export function useAuth() {
 
         if (remember) {
             localStorage.setItem("rememberEmail", email);
+            localStorage.setItem("keepLogin", "true");
+        } else {
+            localStorage.removeItem("keepLogin");
         }
 
         return { success: true, message: "로그인 성공!" };
