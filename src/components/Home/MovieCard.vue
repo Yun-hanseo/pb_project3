@@ -36,56 +36,61 @@
 import { ref, computed, onMounted } from "vue";
 
 const props = defineProps({
-  movie: Object,          // TMDB 영화 데이터
-  genres: Array           // 선택 항목 (장르 이름)
+  movie: Object,
+  genres: Array
 });
 
-// ---------------------------
-// 추천 여부 저장용 LocalStorage
-// ---------------------------
+/* =========================
+   찜 상태 (Wishlist 연동)
+========================= */
 const isBookmarked = ref(false);
 
-const STORAGE_KEY = "bookmarkedMovies";
+const ID_KEY = "likedMovies";
+const DATA_KEY = "likedMoviesData";
 
-// ---------------------------
-// 유틸: LocalStorage에서 이미 추천한 영화인지 체크
-// ---------------------------
+/* 찜 상태 로드 */
 function loadBookmarkStatus() {
-  const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  isBookmarked.value = list.includes(props.movie.id);
+  const ids = JSON.parse(localStorage.getItem(ID_KEY) || "[]");
+  isBookmarked.value = ids.includes(props.movie.id);
 }
 
-// ---------------------------
-// 추천 리스트 토글
-// ---------------------------
+/* 찜 토글 */
 function toggleBookmark() {
-  const list = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  const ids = JSON.parse(localStorage.getItem(ID_KEY) || "[]");
+  const data = JSON.parse(localStorage.getItem(DATA_KEY) || "[]");
 
   if (isBookmarked.value) {
-    // 삭제
-    const newList = list.filter(id => id !== props.movie.id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newList));
+    localStorage.setItem(
+        ID_KEY,
+        JSON.stringify(ids.filter(id => id !== props.movie.id))
+    );
+    localStorage.setItem(
+        DATA_KEY,
+        JSON.stringify(data.filter(m => m.id !== props.movie.id))
+    );
     isBookmarked.value = false;
   } else {
-    // 추가
-    list.push(props.movie.id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    localStorage.setItem(
+        ID_KEY,
+        JSON.stringify([...ids, props.movie.id])
+    );
+    localStorage.setItem(
+        DATA_KEY,
+        JSON.stringify([...data, props.movie])
+    );
     isBookmarked.value = true;
   }
 }
 
-// ---------------------------
-// 이미지 URL 생성
-// ---------------------------
+/* =========================
+   기존 코드 (그대로 유지)
+========================= */
 const imgUrl = computed(() => {
   return props.movie.poster_path
       ? `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`
       : "/no-image.png";
 });
 
-// ---------------------------
-// 설명(overview) 일부만 자르기
-// ---------------------------
 const shortOverview = computed(() => {
   if (!props.movie.overview) return "설명 없음";
   return props.movie.overview.length > 70
@@ -93,10 +98,9 @@ const shortOverview = computed(() => {
       : props.movie.overview;
 });
 
-// ---------------------------
 onMounted(loadBookmarkStatus);
-// ---------------------------
 </script>
+
 
 <style scoped>
 .movie-card {
