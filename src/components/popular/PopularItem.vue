@@ -7,10 +7,13 @@
         :alt="movie.title"
     />
 
-    <!-- 하트 -->
-    <button class="heart" @click.stop="toggleLike">
-      <span v-if="liked">🤍</span>
-      <span v-else>🤍</span>
+    <!-- ❤️ 하트 (메인과 동일한 로직) -->
+    <button
+        class="heart-btn"
+        :class="{ active: isLiked }"
+        @click.stop="toggleLike"
+    >
+      <span class="heart">{{ isLiked ? "♥" : "♡" }}</span>
     </button>
 
     <!-- 제목 -->
@@ -19,57 +22,33 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { computed } from "vue";
+import { useWishlist } from "@/composables/useWishlist";
 
 const props = defineProps({
   movie: Object
 });
 
-const liked = ref(false);
-const ID_KEY = "likedMovies";
-const DATA_KEY = "likedMoviesData";
+/* =========================
+   ❤️ 찜 기능 (메인과 통합)
+========================= */
+const { toggleWishlist, isInWishlist } = useWishlist();
 
-/* 찜 상태 로드 */
-onMounted(() => {
-  const ids = JSON.parse(localStorage.getItem(ID_KEY) || "[]");
-  liked.value = ids.includes(props.movie.id);
-});
+const isLiked = computed(() =>
+    isInWishlist(props.movie.id)
+);
 
+function toggleLike() {
+  toggleWishlist(props.movie);
+}
+
+/* 포스터 URL */
 const posterUrl = computed(() => {
   return props.movie.poster_path
       ? `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`
       : "/no-image.png";
 });
-
-/* 찜 토글 */
-function toggleLike() {
-  const ids = JSON.parse(localStorage.getItem(ID_KEY) || "[]");
-  const data = JSON.parse(localStorage.getItem(DATA_KEY) || "[]");
-
-  if (liked.value) {
-    localStorage.setItem(
-        ID_KEY,
-        JSON.stringify(ids.filter(id => id !== props.movie.id))
-    );
-    localStorage.setItem(
-        DATA_KEY,
-        JSON.stringify(data.filter(m => m.id !== props.movie.id))
-    );
-    liked.value = false;
-  } else {
-    localStorage.setItem(
-        ID_KEY,
-        JSON.stringify([...ids, props.movie.id])
-    );
-    localStorage.setItem(
-        DATA_KEY,
-        JSON.stringify([...data, props.movie])
-    );
-    liked.value = true;
-  }
-}
 </script>
-
 
 <style scoped>
 .simple-card {
@@ -99,15 +78,43 @@ function toggleLike() {
   color: #eee;
 }
 
-/* 하트 */
-.heart {
+/* ❤️ 하트 버튼 (메인과 동일한 감성) */
+.heart-btn {
   position: absolute;
   top: 8px;
   right: 8px;
-  background: none;
-  border: none;
-  font-size: 20px;
+
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
+  z-index: 5;
+  transition: all 0.2s ease;
+}
+
+.heart-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+  transform: scale(1.1);
+}
+
+/* 하트 문자 */
+.heart {
+  font-size: 16px;
+  color: #bbb;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* ❤️ 눌린 상태 */
+.heart-btn.active .heart {
+  color: #e50914;
+  transform: scale(1.15);
 }
 </style>
-

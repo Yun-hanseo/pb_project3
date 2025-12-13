@@ -25,8 +25,7 @@ html, body, #app {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-  background: white;
-  overflow-x: hidden;/* 🔥 기본 배경을 검정으로 */
+  background-color:#1a1a1d;
+  overflow-x: hidden;
 }
 </style>

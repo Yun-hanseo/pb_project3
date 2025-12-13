@@ -87,14 +87,17 @@ onUnmounted(() => {
 <style scoped>
 .popular-infinite {
   width: 100%;
-  padding: 20px;
+  padding: 20px 60px 20px 0px;
 }
 
 /* 🔥 핵심: 그리드 레이아웃 */
 .movie-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
+
+  max-width: calc(100vw - 40px);
+  margin: 0 auto;
 }
 
 /* 로딩 */

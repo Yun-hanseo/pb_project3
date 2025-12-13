@@ -77,14 +77,14 @@ onMounted(() => {
 
 <style scoped>
 .popular-table {
-  padding: 20px;
+  padding: 20px 40px 20px 20px;
 }
 
 /* 테이블 느낌의 그리드 */
 .table-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 20px;
 }
 
 /* Pagination */
@@ -94,6 +94,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   gap: 16px;
+  color:white;
 }
 
 button {

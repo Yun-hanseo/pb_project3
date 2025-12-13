@@ -22,7 +22,6 @@ import MovieSection from "./MovieSection.vue";
   width: 100%;
   margin: 0 auto;         /* 가운데 정렬 */
   padding: 20px;
-  background-color:#1a1a1d;
   color:white;
 }
 
