@@ -26,6 +26,14 @@ const props = defineProps({
 });
 
 const liked = ref(false);
+const ID_KEY = "likedMovies";
+const DATA_KEY = "likedMoviesData";
+
+/* 찜 상태 로드 */
+onMounted(() => {
+  const ids = JSON.parse(localStorage.getItem(ID_KEY) || "[]");
+  liked.value = ids.includes(props.movie.id);
+});
 
 const posterUrl = computed(() => {
   return props.movie.poster_path
@@ -33,10 +41,35 @@ const posterUrl = computed(() => {
       : "/no-image.png";
 });
 
+/* 찜 토글 */
 function toggleLike() {
-  liked.value = !liked.value;
+  const ids = JSON.parse(localStorage.getItem(ID_KEY) || "[]");
+  const data = JSON.parse(localStorage.getItem(DATA_KEY) || "[]");
+
+  if (liked.value) {
+    localStorage.setItem(
+        ID_KEY,
+        JSON.stringify(ids.filter(id => id !== props.movie.id))
+    );
+    localStorage.setItem(
+        DATA_KEY,
+        JSON.stringify(data.filter(m => m.id !== props.movie.id))
+    );
+    liked.value = false;
+  } else {
+    localStorage.setItem(
+        ID_KEY,
+        JSON.stringify([...ids, props.movie.id])
+    );
+    localStorage.setItem(
+        DATA_KEY,
+        JSON.stringify([...data, props.movie])
+    );
+    liked.value = true;
+  }
 }
 </script>
+
 
 <style scoped>
 .simple-card {
