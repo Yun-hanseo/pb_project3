@@ -2,12 +2,10 @@
   <div class="wishlist-page">
 
     <!-- 페이지 제목 -->
-    <h1 class="title">❤️ 내가 찜한 영화</h1>
+    <h1 class="title">내가 찜한 리스트</h1>
 
     <!-- ================= 찜 리스트 ================= -->
     <section class="list-section">
-      <h2 class="section-title">📌 찜한 목록</h2>
-
       <div v-if="pagedMovies.length" class="table-grid">
         <WishlistItem
             v-for="movie in pagedMovies"
@@ -89,14 +87,12 @@ watch(page, () => {
 <style scoped>
 .wishlist-page {
   padding: 20px;
+  color:white;
 }
 
 .title {
   margin-bottom: 30px;
-}
-
-.section-title {
-  margin: 20px 0 14px;
+  color:white;
 }
 
 /* 테이블 */
