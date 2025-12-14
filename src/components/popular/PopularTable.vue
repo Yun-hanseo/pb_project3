@@ -41,7 +41,7 @@ import PopularItem from "./PopularItem.vue";
 import { useTMDB } from "../../composables/useTMDB.js";
 
 const page = ref(1);
-const totalPages = 30;        // 🔥 10 → 30
+const totalPages = 30;
 const movies = ref([]);
 const { getMovies } = useTMDB();
 
@@ -52,7 +52,7 @@ async function loadMovies() {
 
 /* 페이지 변경 시 자동 스크롤 맨 위 */
 watch(page, () => {
-  window.scrollTo({ top: 0, behavior: "smooth" }); // 🔥 UX 개선
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 function nextPage() {

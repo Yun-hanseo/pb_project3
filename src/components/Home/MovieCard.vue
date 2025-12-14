@@ -1,11 +1,9 @@
 <template>
   <div class="poster-card">
 
-    <!-- 🎬 포스터 -->
     <div class="poster-wrapper">
       <img :src="imgUrl" class="poster-img" />
 
-      <!-- ❤️ 좋아요 버튼 -->
       <button
           class="wish-btn"
           :class="{ active: isBookmarked }"
@@ -15,21 +13,17 @@
       </button>
     </div>
 
-    <!-- 🎞 제목 -->
     <p class="poster-title">{{ movie.title }}</p>
 
-    <!-- ⭐ 평점 + 📅 개봉일 -->
     <div class="poster-info">
       <span class="rating">⭐ {{ movie.vote_average.toFixed(1) }}</span>
       <span class="release">{{ movie.release_date }}</span>
     </div>
 
-    <!-- 🎬 줄거리 보기 -->
     <button class="summary-btn" @click="openModal">
       줄거리 보기
     </button>
 
-    <!-- 🎬 카드 내부 미니 모달 -->
     <div v-if="showModal" class="inner-popup">
       <button class="close-btn" @click="closeModal">✕</button>
 
@@ -44,21 +38,16 @@
 import { ref, computed } from "vue";
 import { useWishlist } from "@/composables/useWishlist";
 
-/* props */
 const props = defineProps({
   movie: Object
 });
 
-/* 이미지 */
 const imgUrl = computed(() =>
     props.movie.poster_path
         ? `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`
         : "https://via.placeholder.com/300x450"
 );
 
-/* =========================
-   ❤️ 찜 기능 (공유 상태 기준)
-========================= */
 const { toggleWishlist, isInWishlist } = useWishlist();
 
 const isBookmarked = computed(() =>
@@ -69,16 +58,12 @@ function toggleBookmark() {
   toggleWishlist(props.movie);
 }
 
-/* =========================
-   📖 카드 내부 모달
-========================= */
 const showModal = ref(false);
 const openModal = () => (showModal.value = true);
 const closeModal = () => (showModal.value = false);
 </script>
 
 <style scoped>
-/* 카드 */
 .poster-card {
   width: 230px;
   display: flex;
@@ -91,7 +76,6 @@ const closeModal = () => (showModal.value = false);
   flex-shrink: 0;
 }
 
-/* 포스터 */
 .poster-wrapper {
   position: relative;
   border-radius: 12px;
@@ -109,7 +93,6 @@ const closeModal = () => (showModal.value = false);
   transform: scale(1.05);
 }
 
-/* 제목 */
 .poster-title {
   font-size: 15px;
   font-weight: 600;
@@ -117,7 +100,6 @@ const closeModal = () => (showModal.value = false);
   margin-top: 4px;
 }
 
-/* 정보 */
 .poster-info {
   display: flex;
   gap: 10px;
@@ -132,7 +114,6 @@ const closeModal = () => (showModal.value = false);
   color: #aaa;
 }
 
-/* ❤️ 좋아요 버튼 */
 .wish-btn {
   position: absolute;
   top: 10px;
@@ -159,20 +140,17 @@ const closeModal = () => (showModal.value = false);
   transform: scale(1.1);
 }
 
-/* ❤️ 기본 하트 */
 .heart {
   font-size: 18px;
   color: #bbb;
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
-/* ❤️ 눌린 상태 */
 .wish-btn.active .heart {
   color: #e50914;
   transform: scale(1.15);
 }
 
-/* 🎬 줄거리 버튼 */
 .summary-btn {
   margin-top: 4px;
   height: 34px;
@@ -184,9 +162,6 @@ const closeModal = () => (showModal.value = false);
   cursor: pointer;
 }
 
-/* =========================
-   📖 카드 내부 팝업
-========================= */
 .inner-popup {
   position: absolute;
   inset: 0;
@@ -226,10 +201,31 @@ const closeModal = () => (showModal.value = false);
   overflow-y: auto;
 }
 
-/* 애니메이션 */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
+
+@media (max-width: 480px) {
+
+  .poster-card {
+    width: 40vw;
+    padding: 8px;
+  }
+
+  .poster-title {
+    font-size: 14px;
+  }
+
+  .poster-info {
+    font-size: 12px;
+  }
+
+  .summary-btn {
+    height: 30px;
+    font-size: 13px;
+  }
+}
+
 </style>
 

@@ -2,7 +2,6 @@
   <div class="flip-wrapper">
     <div class="flip-card" :class="{ flipped: !isLogin }">
 
-      <!-- 로그인 카드 면 -->
       <div class="flip-face front">
         <h2>로그인</h2>
         <LoginForm
@@ -12,7 +11,6 @@
         />
       </div>
 
-      <!-- 회원가입 카드 면 -->
       <div class="flip-face back">
         <h2>회원가입</h2>
         <RegisterForm
@@ -54,13 +52,12 @@ function handleRegisterFail(error) { alert(error); }
 </script>
 
 <style scoped>
-/* 배경 (넷플릭스 느낌 유지) */
 .flip-wrapper {
-  position: fixed;          /* 🔥 핵심 */
-  inset: 0;                 /* top/right/bottom/left = 0 */
+  position: fixed;
+  inset: 0;
   display: flex;
-  align-items: center;      /* 수직 중앙 */
-  justify-content: center;  /* 수평 중앙 */
+  align-items: center;
+  justify-content: center;
 
   background:
       linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
@@ -71,9 +68,8 @@ function handleRegisterFail(error) { alert(error); }
   background-repeat: no-repeat;
 }
 
-/* 카드 회전 컨테이너 */
 .flip-card {
-  width: 500px;                 /* 🔥 카드 크게 */
+  width: 500px;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 1.0s ease;
@@ -86,16 +82,15 @@ function handleRegisterFail(error) { alert(error); }
   transform: rotateY(180deg);
 }
 
-/* 앞/뒤 카드 공통 */
 .flip-face {
   position: absolute;
   width: 100%;
   backface-visibility: hidden;
 
-  padding: 40px 26px;           /* 🔥 넉넉한 여백 */
+  padding: 40px 26px;
   border-radius: 16px;
 
-  background: rgba(0,0,0,0.6);  /* 🔥 반투명 */
+  background: rgba(0,0,0,0.6);
   backdrop-filter: blur(8px);
 
   box-shadow:
@@ -105,30 +100,63 @@ function handleRegisterFail(error) { alert(error); }
   color: white;
 }
 
-/* 제목 */
+
+.flip-face.back {
+  transform: translateX(-12px);
+}
+
+.flip-face.front {
+  transform: rotateY(180deg) translateX(20px);
+}
+
 .flip-face h2 {
   margin-bottom: 32px;
   font-size: 34px;
   font-weight: 700;
 }
 
-/* 뒷면 */
 .back {
   transform: rotateY(180deg) translateX(20px);
 }
 
 
-/* 반응형 */
-@media (max-width: 500px) {
+@media (max-width: 480px) {
+
+  .flip-wrapper {
+    padding: 25px;
+  }
+
   .flip-card {
-    width: 340px;
+    width: 80%;
+    min-height: 500px;
+
+    transform: none;
   }
+
+  .flip-card.flipped {
+    transform: rotateY(180deg);
+  }
+
   .flip-face {
-    padding: 40px 28px;
+    padding: 28px 20px;
   }
+
   .flip-face h2 {
-    font-size: 26px;
+    font-size: 24px;
+    margin-bottom: 22px;
   }
+
+  .back {
+    transform: rotateY(180deg);
+  }
+}
+
+.flip-face.front {
+  transform: translateX(-12px);
+}
+
+.flip-face.back {
+  transform: rotateY(180deg) translateX(20px);
 }
 
 </style>

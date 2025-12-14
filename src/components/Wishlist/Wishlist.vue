@@ -43,14 +43,8 @@ import { ref, computed, watch } from "vue";
 import WishlistItem from "./WishlistItem.vue";
 import { useWishlist } from "@/composables/useWishlist";
 
-/* ======================
-   🔥 공통 Wishlist 상태
-====================== */
 const { wishlistMovies, removeFromWishlist } = useWishlist();
 
-/* ======================
-   Pagination
-====================== */
 const page = ref(1);
 const perPage = 20;
 
@@ -71,9 +65,6 @@ function prevPage() {
   if (page.value > 1) page.value--;
 }
 
-/* ======================
-   ❌ 찜 해제 (핵심)
-====================== */
 function removeMovie(id) {
   removeFromWishlist(id);
 }
@@ -130,4 +121,35 @@ button:disabled {
 .page-info {
   font-weight: bold;
 }
+
+@media (max-width: 425px) {
+  .wishlist-page {
+    padding: 14px;
+  }
+
+  .title {
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .table-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .pagination {
+    gap: 10px;
+  }
+
+  .pagination button {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .page-info {
+    font-size: 13px;
+  }
+}
+
 </style>

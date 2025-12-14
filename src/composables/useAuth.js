@@ -1,4 +1,3 @@
-// src/composables/useAuth.js
 import { ref } from "vue";
 
 // 🔥 TMDB API KEY 검증 함수 (파일 분리 X)
@@ -41,7 +40,6 @@ export function useAuth() {
             return { success: false, message: "이미 존재하는 계정입니다." };
         }
 
-        // 🔥 비밀번호 = TMDB API KEY → 검증
         const keyValid = await validateApiKey(password);
         if (!keyValid)
             return { success: false, message: "올바르지 않은 TMDB API Key 입니다." };

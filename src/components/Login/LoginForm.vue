@@ -1,7 +1,6 @@
 <template>
   <div class="login-form">
 
-    <!-- 아이디 입력 -->
     <div>
       <label>아이디 (Email)</label>
       <input
@@ -11,7 +10,6 @@
       />
     </div>
 
-    <!-- TMDB API Key 입력 -->
     <div style="margin-top: 10px;">
       <label>TMDB API Key</label>
       <input
@@ -21,7 +19,6 @@
       />
     </div>
 
-    <!-- Remember Me -->
     <div style="margin-top: 10px;">
       <input
           type="checkbox"
@@ -31,12 +28,10 @@
       <label for="remember">Remember Me</label>
     </div>
 
-    <!-- 로그인 버튼 -->
     <button style="margin-top: 20px;" @click="onLoginClick">
       로그인
     </button>
 
-    <!-- 회원가입으로 이동 -->
     <div style="margin-top: 15px;">
       <p>
         아직 회원이 아니신가요?
@@ -51,22 +46,18 @@
 import { ref, onMounted } from "vue";
 import { useAuth } from "../../composables/useAuth.js";
 
-// 입력값
 const email = ref("");
-const password = ref("");    // ← TMDB API Key 저장
+const password = ref("");
 const remember = ref(false);
 
-// Auth 로직
 const { login } = useAuth();
 
-// 부모에게 이벤트 전달
 const emit = defineEmits([
   "loginSuccess",
   "loginFail",
   "switchToRegister"
 ]);
 
-// 최초 진입 시, rememberEmail 있으면 자동 채우기
 onMounted(() => {
   const rememberedEmail = localStorage.getItem("rememberEmail");
   const keepLogin = localStorage.getItem("keepLogin") === "true";
@@ -79,11 +70,10 @@ onMounted(() => {
   }
 });
 
-// 로그인 버튼 클릭
 function onLoginClick() {
   const result = login({
     email: email.value,
-    password: password.value,   // TMDB API KEY 전달
+    password: password.value,
     remember: remember.value,
   });
 
@@ -94,7 +84,6 @@ function onLoginClick() {
   }
 }
 
-// 회원가입으로 전환
 function switchToRegister() {
   emit("switchToRegister");
 }
@@ -119,7 +108,7 @@ function switchToRegister() {
   border-radius: 6px;
   border: 1px solid rgba(255,255,255,0.15);
 
-  background: rgba(255,255,255,0.08); /* 🔥 쨍함 제거 */
+  background: rgba(255,255,255,0.08);
   color: white;
 }
 
@@ -154,6 +143,30 @@ function switchToRegister() {
 .switch {
   color: #4dabff;
   cursor: pointer;
+}
+
+@media (max-width: 480px) {
+
+  .login-form {
+    gap: 16px;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    width: 80%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .login-form button {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .login-form label {
+    font-size: 12px;
+  }
+
 }
 
 </style>

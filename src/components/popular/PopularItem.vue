@@ -7,7 +7,6 @@
         :alt="movie.title"
     />
 
-    <!-- ❤️ 하트 (메인과 동일한 로직) -->
     <button
         class="heart-btn"
         :class="{ active: isLiked }"
@@ -29,9 +28,6 @@ const props = defineProps({
   movie: Object
 });
 
-/* =========================
-   ❤️ 찜 기능 (메인과 통합)
-========================= */
 const { toggleWishlist, isInWishlist } = useWishlist();
 
 const isLiked = computed(() =>
@@ -78,7 +74,6 @@ const posterUrl = computed(() => {
   color: #eee;
 }
 
-/* ❤️ 하트 버튼 (메인과 동일한 감성) */
 .heart-btn {
   position: absolute;
   top: 8px;
@@ -105,14 +100,12 @@ const posterUrl = computed(() => {
   transform: scale(1.1);
 }
 
-/* 하트 문자 */
 .heart {
   font-size: 16px;
   color: #bbb;
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
-/* ❤️ 눌린 상태 */
 .heart-btn.active .heart {
   color: #e50914;
   transform: scale(1.15);

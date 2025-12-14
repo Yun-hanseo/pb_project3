@@ -1,7 +1,6 @@
 <template>
   <div class="register-form">
 
-    <!-- 아이디 (이메일) -->
     <div>
       <label>아이디 (Email)</label>
       <input
@@ -11,7 +10,6 @@
       />
     </div>
 
-    <!-- TMDB API Key -->
     <div style="margin-top: 10px;">
       <label>TMDB API Key</label>
       <input
@@ -21,7 +19,6 @@
       />
     </div>
 
-    <!-- TMDB API Key 확인 -->
     <div style="margin-top: 10px;">
       <label>TMDB API Key 확인</label>
       <input
@@ -31,7 +28,6 @@
       />
     </div>
 
-    <!-- 약관 동의 -->
     <div style="margin-top: 10px;">
       <input
           type="checkbox"
@@ -41,12 +37,10 @@
       <label for="agree">약관에 동의합니다 (필수)</label>
     </div>
 
-    <!-- 회원가입 버튼 -->
     <button style="margin-top: 20px;" @click="onRegisterClick">
       회원가입
     </button>
 
-    <!-- 로그인으로 이동 -->
     <div style="margin-top: 15px;">
       <p>
         이미 회원이신가요?
@@ -62,23 +56,19 @@ import { ref } from "vue";
 import { useAuth } from "../../composables/useAuth.js";
 
 
-// 입력값
 const email = ref("");
-const password = ref("");         // TMDB KEY
-const passwordCheck = ref("");    // TMDB KEY 확인
+const password = ref("");
+const passwordCheck = ref("");
 const agree = ref(false);
 
-// Auth 로직
 const { register } = useAuth();
 
-// 부모에게 이벤트 전달
 const emit = defineEmits([
   "registerSuccess",
   "registerFail",
   "switchToLogin"
 ]);
 
-// 회원가입 버튼 클릭
 async function onRegisterClick() {
   const result = await register({
     email: email.value,
@@ -94,7 +84,6 @@ async function onRegisterClick() {
   }
 }
 
-// 로그인으로 전환
 function switchToLogin() {
   emit("switchToLogin");
 }
@@ -154,6 +143,30 @@ function switchToLogin() {
 .switch {
   color: #4dabff;
   cursor: pointer;
+}
+
+@media (max-width: 480px) {
+
+  .register-form {
+    gap: 10px;
+  }
+
+  .register-form input[type="text"],
+  .register-form input[type="password"] {
+    width: 90%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .register-form button {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .register-form label {
+    font-size: 12px;
+  }
+
 }
 
 </style>

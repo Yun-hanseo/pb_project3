@@ -87,4 +87,18 @@ watch(
 select {
   padding: 6px 10px;
 }
+
+@media (max-width: 480px) {
+  .filter-box {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  select,
+  .reset-btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
 </style>

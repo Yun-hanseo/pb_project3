@@ -40,18 +40,12 @@ const props = defineProps({
 
 const emit = defineEmits(["removed"]);
 
-/* ======================
-   포스터 URL
-====================== */
 const posterUrl = computed(() => {
   return props.movie.poster_path
       ? `https://image.tmdb.org/t/p/w300${props.movie.poster_path}`
       : "/no-image.png";
 });
 
-/* ======================
-   찜 해제
-====================== */
 function remove() {
   emit("removed", props.movie.id);
 }
@@ -109,4 +103,23 @@ function remove() {
   font-size: 12px;
   color: #aaa;
 }
+
+@media (max-width: 425px) {
+  .remove-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    top: 6px;
+    right: 6px;
+  }
+
+  .title {
+    font-size: 13px;
+  }
+
+  .meta {
+    font-size: 11px;
+  }
+}
+
 </style>

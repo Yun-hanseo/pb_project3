@@ -12,7 +12,6 @@
     <!-- 제목 -->
     <p class="title">{{ movie.title }}</p>
 
-    <!-- ❤️ 하트 (메인 / Popular와 동일) -->
     <button
         class="heart-btn"
         :class="{ active: isLiked }"
@@ -35,9 +34,6 @@ const props = defineProps({
   },
 });
 
-/* =========================
-   ❤️ 찜 기능 (통합)
-========================= */
 const { toggleWishlist, isInWishlist } = useWishlist();
 
 const isLiked = computed(() =>
@@ -84,7 +80,6 @@ const posterUrl = computed(() => {
   text-overflow: ellipsis;
 }
 
-/* ❤️ 하트 버튼 (메인/Popular와 동일한 감성) */
 .heart-btn {
   position: absolute;
   top: 8px;
@@ -118,9 +113,51 @@ const posterUrl = computed(() => {
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
-/* ❤️ 눌린 상태 */
 .heart-btn.active .heart {
   color: #e50914;
   transform: scale(1.15);
 }
+
+@media (max-width: 425px) {
+  .title {
+    font-size: 13px;
+  }
+
+  .heart-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .heart {
+    font-size: 14px;
+  }
+}
+.search-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 포스터는 비율 고정 */
+.poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* 제목 영역 높이 고정 */
+.title {
+  margin-top: 6px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.2;
+
+  height: 34px;              /* 🔥 두 줄 기준 고정 */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 </style>

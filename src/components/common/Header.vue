@@ -1,10 +1,8 @@
 <template>
   <header class="header">
 
-    <!-- 로고 -->
     <h1 class="logo" @click="go('/')">HOME</h1>
 
-    <!-- 네비게이션 -->
     <nav class="nav">
       <span @click="go('/')" :class="{ active: isActive('/') }">메인</span>
       <span @click="go('/popular')" :class="{ active: isActive('/popular') }">인기</span>
@@ -12,7 +10,6 @@
       <span @click="go('/wishlist')" :class="{ active: isActive('/wishlist') }">찜한 목록</span>
     </nav>
 
-    <!-- 우측 영역 -->
     <div class="right-area">
       <span class="user-email">현재 접속자: {{ userEmail }}</span>
       <button @click="logoutUser" class="logout-btn">로그아웃</button>
@@ -61,14 +58,12 @@ function logoutUser() {
   justify-content: space-between;
 }
 
-/* 로고 */
 .logo {
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
 }
 
-/* 네비게이션 */
 .nav {
   display: flex;
   gap: 20px;
@@ -91,7 +86,6 @@ function logoutUser() {
   border-bottom: 2px solid white;
 }
 
-/* 우측 */
 .right-area {
   display: flex;
   align-items: center;
@@ -109,5 +103,55 @@ function logoutUser() {
   cursor: pointer;
   margin-right: 50px;
 }
+
+
+@media (max-width: 480px) {
+
+  .header {
+    height: auto;
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .nav {
+    width: 100%;
+    margin-right: 0;
+    justify-content: space-around;
+    gap: 0;
+    margin-top: 8px;
+  }
+
+  .nav span {
+    font-size: 14px;
+  }
+
+  .right-area {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+
+  .user-email {
+    font-size: 12px;
+    margin-right: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 65%;
+  }
+
+  .logout-btn {
+    margin-left: 10px;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}
+
 </style>
 

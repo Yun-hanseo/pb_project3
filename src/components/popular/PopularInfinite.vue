@@ -1,7 +1,6 @@
 <template>
   <div class="popular-infinite">
 
-    <!-- 영화 그리드 -->
     <div class="movie-grid">
       <PopularItem
           v-for="(movie, idx) in movies"
@@ -10,12 +9,10 @@
       />
     </div>
 
-    <!-- 로딩 표시 -->
     <div v-if="loading" class="loading">
       불러오는 중...
     </div>
 
-    <!-- Top 버튼 -->
     <PopularTopButton v-if="showTopButton" />
   </div>
 </template>
@@ -31,17 +28,13 @@ const page = ref(1);
 const loading = ref(false);
 const showTopButton = ref(false);
 
-const MAX_PAGE = 20; // 🔥 TMDB popular 안전 범위
+const MAX_PAGE = 20;
 const { getMovies } = useTMDB();
 
-/* -------------------------
-   영화 불러오기
-------------------------- */
 async function loadMore() {
   if (loading.value) return;
   loading.value = true;
 
-  // 🔁 페이지 루프
   if (page.value > MAX_PAGE) {
     page.value = 1;
   }
@@ -56,9 +49,6 @@ async function loadMore() {
   loading.value = false;
 }
 
-/* -------------------------
-   스크롤 감지 (window 기준)
-------------------------- */
 function handleScroll() {
   const scrollEnd =
       window.innerHeight + window.scrollY >=
@@ -71,9 +61,6 @@ function handleScroll() {
   showTopButton.value = window.scrollY > 400;
 }
 
-/* -------------------------
-   라이프사이클
-------------------------- */
 onMounted(() => {
   loadMore();
   window.addEventListener("scroll", handleScroll);
@@ -90,7 +77,6 @@ onUnmounted(() => {
   padding: 20px 60px 20px 0px;
 }
 
-/* 🔥 핵심: 그리드 레이아웃 */
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -100,18 +86,16 @@ onUnmounted(() => {
   margin: 0 auto;
 }
 
-/* 로딩 */
 .loading {
   text-align: center;
   padding: 20px;
   opacity: 0.7;
 }
 
-/* 📱 모바일 대응 */
 @media (max-width: 480px) {
   .movie-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 20px;
   }
 }
 </style>

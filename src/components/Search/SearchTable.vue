@@ -32,9 +32,6 @@
 import { ref, computed, watch } from "vue";
 import SearchItem from "./SearchItem.vue";
 
-/* ======================
-   props (부모에서 받은 필터된 영화)
-====================== */
 const props = defineProps({
   movies: {
     type: Array,
@@ -42,9 +39,6 @@ const props = defineProps({
   },
 });
 
-/* ======================
-   Pagination 상태
-====================== */
 const page = ref(1);
 const perPage = 20;
 
@@ -72,9 +66,6 @@ watch(
     }
 );
 
-/* ======================
-   페이지 이동
-====================== */
 function nextPage() {
   if (page.value < totalPages.value) {
     page.value++;
@@ -122,5 +113,28 @@ button:disabled {
 .page-info {
   font-weight: bold;
 }
+
+@media (max-width: 425px) {
+
+  .table-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .pagination {
+    gap: 10px;
+  }
+
+  .pagination button {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .page-info {
+    font-size: 13px;
+  }
+}
+
 </style>
 
