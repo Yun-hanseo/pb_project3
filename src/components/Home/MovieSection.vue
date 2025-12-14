@@ -3,9 +3,8 @@
 
     <h2 class="section-title">{{ title }}</h2>
 
-    <div v-if="loading" class="loading">
-      <p>불러오는 중...</p>
-    </div>
+    <!-- 로딩 화면 -->
+    <Loading v-if="loading" />
 
     <div v-else class="movie-list">
       <MovieCard
@@ -22,6 +21,7 @@
 import { ref, onMounted } from "vue";
 import MovieCard from "./MovieCard.vue";
 import { useTMDB } from "../../composables/useTMDB.js";
+import Loading from "@/components/common/Loading.vue";
 
 const props = defineProps({
   title: String,       // 섹션 제목
@@ -79,14 +79,6 @@ onMounted(() => {
 
 .movie-list::-webkit-scrollbar-thumb:hover {
   background-color: #ff2a2a;
-}
-
-.loading {
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0.7;
 }
 
 @media (max-width: 480px) {

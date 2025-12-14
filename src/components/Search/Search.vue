@@ -1,6 +1,5 @@
 <template>
   <div class="search-page">
-
     <!-- 필터 영역 -->
     <SearchFilter
         :filters="filters"
@@ -8,21 +7,24 @@
         @reset="resetFilter"
     />
 
-    <SearchTable :movies="filteredMovies" />
+    <Loading v-if="loading" />
 
-
+    <SearchTable v-else :movies="filteredMovies" />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useTMDB } from "../../composables/useTMDB.js";
+import Loading from "@/components/common/Loading.vue";
 
 import SearchFilter from "./SearchFilter.vue";
 import SearchTable from "./SearchTable.vue";
 
 const movies = ref([]);
 const rawMovies = ref([]);
+const loading = ref(true);
+
 const filters = ref({
   genre: "",
   rating: 0,
@@ -31,21 +33,29 @@ const filters = ref({
 
 const { getMovies } = useTMDB();
 onMounted(async () => {
-  const collected = [];
-  const idSet = new Set();
+  loading.value = true;
 
-  for (let page = 1; page <= 50; page++) {
-    const res = await getMovies("popular", page);
+  try {
+    const collected = [];
+    const idSet = new Set();
 
-    res.forEach(movie => {
-      if (!idSet.has(movie.id)) {
-        idSet.add(movie.id);
-        collected.push(movie);
-      }
-    });
+    for (let page = 1; page <= 50; page++) {
+      const res = await getMovies("popular", page);
+
+      res.forEach(movie => {
+        if (!idSet.has(movie.id)) {
+          idSet.add(movie.id);
+          collected.push(movie);
+        }
+      });
+    }
+
+    rawMovies.value = collected;
+  } catch (e) {
+    console.error(e);
+  } finally {
+    loading.value = false;
   }
-
-  rawMovies.value = collected;
 });
 
 const filteredMovies = computed(() => {

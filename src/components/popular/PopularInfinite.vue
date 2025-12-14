@@ -9,9 +9,8 @@
       />
     </div>
 
-    <div v-if="loading" class="loading">
-      불러오는 중...
-    </div>
+    <!-- 로딩 화면 -->
+    <Loading v-if="loading" />
 
     <PopularTopButton v-if="showTopButton" />
   </div>
@@ -22,6 +21,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useTMDB } from "../../composables/useTMDB.js";
 import PopularItem from "./PopularItem.vue";
 import PopularTopButton from "./PopularTopButton.vue";
+import Loading from "@/components/common/Loading.vue";
 
 const movies = ref([]);
 const page = ref(1);

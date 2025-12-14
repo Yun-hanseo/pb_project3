@@ -1,6 +1,9 @@
 <template>
   <div class="popular-table">
 
+    <!-- 로딩 화면 -->
+    <Loading v-if="loading" />
+
     <!-- 영화 테이블 -->
     <div class="table-grid">
       <PopularItem
@@ -39,6 +42,7 @@
 import { ref, onMounted, watch } from "vue";
 import PopularItem from "./PopularItem.vue";
 import { useTMDB } from "../../composables/useTMDB.js";
+import Loading from "@/components/common/Loading.vue";
 
 const page = ref(1);
 const totalPages = 30;
