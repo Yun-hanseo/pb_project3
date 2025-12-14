@@ -48,29 +48,30 @@ Vue.js 기반으로 영화 조회, 검색, 필터링, 찜(Wishlist), 로그인 �
 
 ## 📂 프로젝트 폴더 구조
 
+```text
 src
-┣ components
-┃ ┣ common
-┃ ┃ ┗ Loading.vue
-┃ ┣ Header
-┃ ┣ Movie
-┃ ┣ Search
-┃ ┣ Wishlist
-┣ composables
-┃ ┣ useAuth.js
-┃ ┣ useTMDB.js
-┃ ┗ useWishlist.js
-┣ router
-┃ ┗ index.js
-┣ views
-┃ ┣ Home.vue
-┃ ┣ Search.vue
-┃ ┣ Wishlist.vue
-┃ ┗ Signin.vue
-┣ App.vue
-┗ main.js
+├─ components
+│  ├─ common
+│  │  └─ Loading.vue
+│  ├─ Header
+│  ├─ Movie
+│  ├─ Search
+│  └─ Wishlist
+├─ composables
+│  ├─ useAuth.js
+│  ├─ useTMDB.js
+│  └─ useWishlist.js
+├─ router
+│  └─ index.js
+├─ views
+│  ├─ Home.vue
+│  ├─ Search.vue
+│  ├─ Wishlist.vue
+│  └─ Signin.vue
+├─ App.vue
+└─ main.js
+```
 
----
 
 ## ⚙ 설치 · 실행 · 빌드 · 배포
 
