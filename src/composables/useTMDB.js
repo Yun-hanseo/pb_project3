@@ -28,8 +28,25 @@ export function useTMDB() {
         }
     }
 
+    async function searchMovies(keyword, page = 1) {
+        try {
+            const res = await client.get(`/search/movie`, {
+                params: {
+                    query: keyword,
+                    page,
+                    include_adult: false
+                }
+            });
+            return res.data.results;
+        } catch (err) {
+            console.error("TMDB 검색 실패:", err);
+            return [];
+        }
+    }
+
     return {
-        getMovies
+        getMovies,
+        searchMovies
     };
 }
 

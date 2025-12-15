@@ -6,10 +6,11 @@
         @change="applyFilter"
         @reset="resetFilter"
     />
+    <SearchInput @search="handleSearch" />
 
     <Loading v-if="loading" />
 
-    <SearchTable v-else :movies="filteredMovies" />
+    <SearchTable v-else :movies="tableMovies" />
   </div>
 </template>
 
@@ -21,7 +22,12 @@ import Loading from "@/components/common/Loading.vue";
 import SearchFilter from "./SearchFilter.vue";
 import SearchTable from "./SearchTable.vue";
 
-const movies = ref([]);
+import SearchInput from "./SearchInput.vue";
+const { searchMovies } = useTMDB();
+
+const searchedMovies = ref([]);
+const searching = ref(false);
+
 const rawMovies = ref([]);
 const loading = ref(true);
 
@@ -39,7 +45,7 @@ onMounted(async () => {
     const collected = [];
     const idSet = new Set();
 
-    for (let page = 1; page <= 50; page++) {
+    for (let page = 1; page <= 200; page++) {
       const res = await getMovies("popular", page);
 
       res.forEach(movie => {
@@ -59,7 +65,11 @@ onMounted(async () => {
 });
 
 const filteredMovies = computed(() => {
-  let list = [...rawMovies.value];
+  let base = searching.value
+      ? searchedMovies.value
+      : rawMovies.value;
+
+  let list = [...base];
 
   // 장르 필터
   if (filters.value.genre) {
@@ -108,22 +118,57 @@ const filteredMovies = computed(() => {
     });
   }
 
-
   return list;
 });
+
 
 function applyFilter(newFilters) {
   filters.value = { ...newFilters };
 }
 
 function resetFilter() {
+  searching.value = false
   filters.value = {
     genre: "",
     rating: 0,
     sort: "popular",
   };
 }
+
+async function handleSearch(keyword) {
+  loading.value = true;
+  searching.value = true;
+
+  try {
+    const normalizedKeyword = keyword.replace(/\s+/g, "").toLowerCase();
+
+    const results = await searchMovies(keyword);
+
+    searchedMovies.value = results.filter(movie => {
+      const title = (movie.title || "").replace(/\s+/g, "").toLowerCase();
+      return title.includes(normalizedKeyword);
+    });
+
+  } catch (e) {
+    console.error(e);
+  } finally {
+    loading.value = false;
+  }
+}
+
+const tableMovies = computed(() => {
+  if (searching.value) {
+    return searchedMovies.value;
+  }
+  return filteredMovies.value;
+});
+
+function normalizedKeyword(text) {
+  return text.replace(/\s+/g, "").toLowerCase();
+}
+
 </script>
+
 
 <style scoped>
 .search-page {
