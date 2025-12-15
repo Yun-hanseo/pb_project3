@@ -52,24 +52,48 @@ Vue.js 기반으로 영화 조회, 검색, 필터링, 찜(Wishlist), 로그인 �
 src
 ├─ components
 │  ├─ common
+│  │  ├─ Header.vue
 │  │  └─ Loading.vue
-│  ├─ Header
-│  ├─ Movie
+│  │
+│  ├─ Home
+│  │  ├─ Home.vue
+│  │  ├─ MovieCard.vue
+│  │  └─ MovieSection.vue
+│  │
+│  ├─ Login
+│  │  ├─ AuthContainer.vue
+│  │  ├─ LoginForm.vue
+│  │  └─ RegisterForm.vue
+│  │
+│  ├─ popular
+│  │  ├─ Popular.vue
+│  │  ├─ PopularInfinite.vue
+│  │  ├─ PopularItem.vue
+│  │  ├─ PopularTable.vue
+│  │  └─ PopularTopButton.vue
+│  │
 │  ├─ Search
+│  │  ├─ Search.vue
+│  │  ├─ SearchFilter.vue
+│  │  ├─ SearchInput.vue
+│  │  ├─ SearchItem.vue
+│  │  └─ SearchTable.vue
+│  │
 │  └─ Wishlist
+│     ├─ Wishlist.vue
+│     └─ WishlistItem.vue
+│
 ├─ composables
 │  ├─ useAuth.js
 │  ├─ useTMDB.js
 │  └─ useWishlist.js
+│
 ├─ router
 │  └─ index.js
-├─ views
-│  ├─ Home.vue
-│  ├─ Search.vue
-│  ├─ Wishlist.vue
-│  └─ Signin.vue
+│
 ├─ App.vue
 └─ main.js
+
 ```
 
 
