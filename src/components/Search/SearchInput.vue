@@ -130,4 +130,11 @@ button {
 .remove:hover {
   color: #e50914; /* 넷플릭스 레드 */
 }
+
+@media (max-width: 425px) {
+  .search-input-box {
+    width: 100%;
+  }
+}
+
 </style>

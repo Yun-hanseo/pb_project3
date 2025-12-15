@@ -55,6 +55,7 @@ const posterUrl = computed(() => {
 .search-item {
   position: relative;
   cursor: pointer;
+  width:100%;
 }
 
 /* 포스터 */
@@ -63,6 +64,8 @@ const posterUrl = computed(() => {
   border-radius: 10px;
   transition: transform 0.25s ease;
 }
+
+
 
 .search-item:hover .poster {
   transform: scale(1.05);
@@ -117,46 +120,113 @@ const posterUrl = computed(() => {
   transform: scale(1.15);
 }
 
-@media (max-width: 425px) {
+/* ===============================
+   📱 모바일 세로 (Portrait)
+   =============================== */
+@media (max-width: 425px) and (orientation: portrait) {
+
+  .search-item {
+    width: 100%;
+  }
+
+  .poster {
+    aspect-ratio: 2 / 3;   /* 세로 포스터 고정 */
+    border-radius: 10px;
+  }
+
   .title {
     font-size: 13px;
+    line-height: 1.2;
+
+    /* 🔥 제목 높이 고정 (카드 흔들림 방지) */
+    height: 32px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
   }
 
   .heart-btn {
     width: 28px;
     height: 28px;
+    top: 6px;
+    right: 6px;
   }
 
   .heart {
     font-size: 14px;
   }
 }
-.search-item {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+
+/* ===============================
+   📱 모바일 가로 (Landscape)
+   =============================== */
+@media (max-width: 900px) and (orientation: landscape) {
+
+  .poster {
+    aspect-ratio: 2 / 3;   /* 가로여도 비율 유지 */
+  }
+
+  .title {
+    font-size: 13px;
+    height: 30px;
+    -webkit-line-clamp: 2;
+  }
+
+  .heart-btn {
+    width: 26px;
+    height: 26px;
+    top: 6px;
+    right: 6px;
+  }
+
+  .heart {
+    font-size: 13px;
+  }
 }
 
-/* 포스터는 비율 고정 */
-.poster {
-  width: 100%;
-  aspect-ratio: 2 / 3;
-  object-fit: cover;
-  border-radius: 10px;
+/* ===============================
+   📱 모바일 가로 (Landscape)
+   =============================== */
+@media (max-width: 900px) and (orientation: landscape) {
+
+  .search-item {
+    width: 100%;
+  }
+
+  /* 🔥 가로에서도 포스터 비율 고정 */
+  .poster {
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  /* 제목 흔들림 방지 */
+  .title {
+    font-size: 13px;
+    line-height: 1.2;
+
+    height: 30px;              /* 카드 높이 통일 */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+  }
+
+  /* 하트 버튼 가로모드용 축소 */
+  .heart-btn {
+    width: 26px;
+    height: 26px;
+    top: 6px;
+    right: 6px;
+  }
+
+  .heart {
+    font-size: 13px;
+  }
 }
 
-/* 제목 영역 높이 고정 */
-.title {
-  margin-top: 6px;
-  font-size: 14px;
-  text-align: center;
-  line-height: 1.2;
-
-  height: 34px;              /* 🔥 두 줄 기준 고정 */
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
 
 </style>

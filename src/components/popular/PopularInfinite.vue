@@ -92,11 +92,40 @@ onUnmounted(() => {
   opacity: 0.7;
 }
 
-@media (max-width: 480px) {
+/* ===============================
+   📱 모바일 세로 (Portrait)
+   =============================== */
+@media (max-width: 480px) and (orientation: portrait) {
+
+  .popular-infinite {
+    padding: 12px;
+  }
+
   .movie-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 16px;
+    max-width: 100%;
+    margin-right:60px;
   }
 }
+
+/* ===============================
+   📱 모바일 가로 (Landscape)
+   =============================== */
+@media (max-width: 900px) and (orientation: landscape) {
+
+  .popular-infinite {
+    padding: 14px 0px;
+  }
+
+  /* 🔥 가로에서는 4열이 가장 안정적 */
+  .movie-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    max-width: 100%;
+    margin-right:50px;
+  }
+}
+
 </style>
 

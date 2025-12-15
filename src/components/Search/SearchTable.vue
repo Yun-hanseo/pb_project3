@@ -114,16 +114,25 @@ button:disabled {
   font-weight: bold;
 }
 
-@media (max-width: 425px) {
+/* ===============================
+   📱 모바일 세로 (Portrait)
+   =============================== */
+@media (max-width: 425px) and (orientation: portrait) {
 
+  .search-table {
+    padding: 12px;
+  }
+
+  /* 🔥 핵심: 2열 고정 */
   .table-grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    align-items: stretch;
   }
 
   .pagination {
-    gap: 10px;
+    margin: 20px 0 30px;
+    gap: 8px;
   }
 
   .pagination button {
@@ -133,6 +142,27 @@ button:disabled {
 
   .page-info {
     font-size: 13px;
+  }
+}
+
+/* ===============================
+   📱 모바일 가로 (Landscape)
+   =============================== */
+@media (max-width: 900px) and (orientation: landscape) {
+
+  .search-table {
+    padding: 14px;
+  }
+
+  /* 가로에서는 4열이 제일 안정적 */
+  .table-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .pagination {
+    margin: 18px 0 24px;
   }
 }
 

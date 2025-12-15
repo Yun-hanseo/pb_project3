@@ -88,17 +88,16 @@ select {
   padding: 6px 10px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 425px) {
   .filter-box {
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 8px;
   }
 
-  select,
-  .reset-btn {
-    width: 100%;
-    box-sizing: border-box;
+  select {
+    flex: 1 1 48%;
   }
 }
+
 
 </style>
