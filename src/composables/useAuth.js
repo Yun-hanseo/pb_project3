@@ -1,5 +1,7 @@
 import { ref } from "vue";
 
+const isLoggedIn = ref(localStorage.getItem("isLoggedIn") === "true");
+
 // 🔥 TMDB API KEY 검증 함수 (파일 분리 X)
 async function validateApiKey(apiKey) {
     const url = `https://api.themoviedb.org/3/movie/550?api_key=${apiKey}`;
@@ -13,7 +15,6 @@ async function validateApiKey(apiKey) {
 }
 
 export function useAuth() {
-    const isLoggedIn = ref(localStorage.getItem("isLoggedIn") === "true");
 
     function isValidEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

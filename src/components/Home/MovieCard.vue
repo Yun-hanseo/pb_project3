@@ -227,5 +227,21 @@ const closeModal = () => (showModal.value = false);
   }
 }
 
+@media (orientation: landscape) and (max-width: 900px) {
+  .poster-card {
+    width: 180px;           /* 가로모드에서 카드 살짝 축소 */
+    padding: 10px;
+  }
+
+  .poster-title {
+    font-size: 13px;
+  }
+
+  .summary-btn {
+    height: 30px;
+    font-size: 13px;
+  }
+}
+
 </style>
 

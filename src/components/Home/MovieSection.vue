@@ -94,5 +94,15 @@ onMounted(() => {
   }
 }
 
+@media (orientation: landscape) and (max-width: 900px) {
+  .movie-list {
+    gap: 10px;
+    padding-bottom: 4px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+}
 
 </style>

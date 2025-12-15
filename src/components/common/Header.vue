@@ -153,5 +153,52 @@ function logoutUser() {
   }
 }
 
+/* 📱 모바일 가로모드 헤더 대응 */
+@media (orientation: landscape) and (max-width: 900px) {
+
+  .header {
+    height: auto;
+    padding: 10px 14px;
+    flex-wrap: wrap;          /* ⭐ 줄바꿈 허용 */
+    gap: 8px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .nav {
+    width: 100%;
+    margin-right: 0;
+    justify-content: left;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .nav span {
+    font-size: 14px;
+  }
+
+  .right-area {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .user-email {
+    font-size: 12px;
+    max-width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .logout-btn {
+    padding: 6px 8px;
+    font-size: 12px;
+    margin-right: 50px;
+  }
+}
+
 </style>
 

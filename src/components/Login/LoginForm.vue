@@ -169,5 +169,30 @@ function switchToRegister() {
 
 }
 
+/* 📱 모바일 가로모드 대응 */
+@media (orientation: landscape) and (max-width: 900px) {
+
+  .login-form {
+    margin-top:90px;
+    gap: 12px;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    width: 75%;
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .login-form button {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .login-form label {
+    font-size: 12px;
+  }
+}
+
 </style>
 
