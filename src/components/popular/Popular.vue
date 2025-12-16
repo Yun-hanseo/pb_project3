@@ -24,11 +24,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onUnmounted } from "vue";
 import PopularTable from "./PopularTable.vue";
 import PopularInfinite from "./PopularInfinite.vue";
 
 const viewMode = ref("table"); // 기본: Table View
+
+watch(viewMode, (mode) => {
+  if (mode === "table") {
+    document.body.style.overflow = "hidden"; // 🔒 스크롤 차단
+  } else {
+    document.body.style.overflow = ""; // 🔓 스크롤 허용
+  }
+});
+
+// 페이지 나갈 때 반드시 원복
+onUnmounted(() => {
+  document.body.style.overflow = "";
+});
 </script>
 
 <style scoped>

@@ -4,11 +4,39 @@
     <h1 class="logo" @click="go('/')">HOME</h1>
 
     <nav class="nav">
-      <span @click="go('/')" :class="{ active: isActive('/') }">메인</span>
-      <span @click="go('/popular')" :class="{ active: isActive('/popular') }">인기</span>
-      <span @click="go('/search')" :class="{ active: isActive('/search') }">검색</span>
-      <span @click="go('/wishlist')" :class="{ active: isActive('/wishlist') }">찜한 목록</span>
+  <span
+      @click="go('/')"
+      @touchstart.prevent="go('/')"
+      :class="{ active: isActive('/') }"
+  >
+    메인
+  </span>
+
+      <span
+          @click="go('/popular')"
+          @touchstart.prevent="go('/popular')"
+          :class="{ active: isActive('/popular') }"
+      >
+    인기
+  </span>
+
+      <span
+          @click="go('/search')"
+          @touchstart.prevent="go('/search')"
+          :class="{ active: isActive('/search') }"
+      >
+    검색
+  </span>
+
+      <span
+          @click="go('/wishlist')"
+          @touchstart.prevent="go('/wishlist')"
+          :class="{ active: isActive('/wishlist') }"
+      >
+    찜한 목록
+  </span>
     </nav>
+
 
     <div class="right-area">
       <span class="user-email">현재 접속자: {{ userEmail }}</span>

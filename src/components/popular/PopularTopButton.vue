@@ -1,6 +1,9 @@
 <template>
-  <button class="top-button" @click="scrollToTop">
-    ⬆ TOP
+  <button
+      class="top-button"
+      @click="scrollToTop"
+      @touchstart.prevent="scrollToTop"
+  >⬆ TOP
   </button>
 </template>
 

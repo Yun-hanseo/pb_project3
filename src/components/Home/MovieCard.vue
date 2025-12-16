@@ -8,8 +8,10 @@
           class="wish-btn"
           :class="{ active: isBookmarked }"
           @click.stop="toggleBookmark"
+          @touchstart.stop.prevent="toggleBookmark"
       >
-        <span class="heart">{{ isBookmarked ? "♥" : "♡" }}</span>
+
+      <span class="heart">{{ isBookmarked ? "♥" : "♡" }}</span>
       </button>
     </div>
 
@@ -20,15 +22,37 @@
       <span class="release">{{ movie.release_date }}</span>
     </div>
 
-    <button class="summary-btn" @click="openModal">
-      줄거리 보기
+    <button
+        class="summary-btn"
+        @click="openModal"
+        @touchstart.prevent="openModal"
+    >줄거리 보기
     </button>
 
     <div v-if="showModal" class="inner-popup">
-      <button class="close-btn" @click="closeModal">✕</button>
+      <button
+          class="close-btn"
+          @click="closeModal"
+          @touchstart.prevent="closeModal"
+      >✕</button>
 
       <h3 class="popup-title">{{ movie.title }}</h3>
-      <p class="popup-overview">{{ movie.overview }}</p>
+
+      <p class="popup-overview" v-if="loadingDetail">
+        줄거리 불러오는 중...
+      </p>
+
+      <p
+          class="popup-overview"
+          v-else-if="detail && detail.overview"
+      >
+        {{ detail.overview }}
+      </p>
+
+      <p class="popup-overview" v-else>
+        설명이 없습니다.
+      </p>
+
     </div>
 
   </div>
@@ -37,10 +61,15 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useWishlist } from "@/composables/useWishlist";
+import { useTMDB } from "@/composables/useTMDB";
 
 const props = defineProps({
   movie: Object
 });
+
+const { getMovieDetail } = useTMDB();
+const detail = ref(null);
+const loadingDetail = ref(false); //
 
 const imgUrl = computed(() =>
     props.movie.poster_path
@@ -59,7 +88,17 @@ function toggleBookmark() {
 }
 
 const showModal = ref(false);
-const openModal = () => (showModal.value = true);
+async function openModal() {
+  showModal.value = true;
+  loadingDetail.value = true;
+  detail.value = null;
+
+  detail.value = await getMovieDetail(props.movie.id);
+
+  loadingDetail.value = false;
+}
+
+
 const closeModal = () => (showModal.value = false);
 </script>
 

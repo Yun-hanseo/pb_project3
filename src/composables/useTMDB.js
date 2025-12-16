@@ -2,21 +2,22 @@ import axios from "axios";
 
 export function useTMDB() {
 
-    const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null");
+    const token = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 
-    const apiKey = currentUser?.apiKey;
-
-    if (!apiKey) {
-        console.warn("🚨 TMDB API Key 없음! 로그인 필요.");
+    if (!token) {
+        console.warn("🚨 TMDB Access Token 없음 (.env 확인)");
     }
 
     const client = axios.create({
         baseURL: "https://api.themoviedb.org/3",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
         params: {
-            api_key: apiKey,
-            language: "ko-KR"
-        }
+            language: "ko-KR",
+        },
     });
+
 
     async function getMovies(type = "popular", page = 1) {
         try {
@@ -44,9 +45,21 @@ export function useTMDB() {
         }
     }
 
+    async function getMovieDetail(movieId) {
+        try {
+            const res = await client.get(`/movie/${movieId}`);
+            return res.data;
+        } catch (err) {
+            console.error("TMDB 상세 조회 실패:", err);
+            return null;
+        }
+    }
+
+
     return {
         getMovies,
-        searchMovies
+        searchMovies,
+        getMovieDetail
     };
 }
 
