@@ -1,8 +1,7 @@
 <template>
   <div class="home-container">
 
-    <!-- 나중에 Header 들어갈 자리 -->
-    <!-- <Header /> -->
+    <HeroBanner />
 
     <!-- 메인 섹션 -->
     <MovieSection title="인기 영화" apiType="popular" />
@@ -15,6 +14,7 @@
 
 <script setup>
 import MovieSection from "./MovieSection.vue";
+import HeroBanner from "./HeroBanner.vue";
 </script>
 
 <style scoped>
